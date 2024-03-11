@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\EmailFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -12,17 +14,26 @@ use Symfony\Component\Routing\Attribute\Route;
 class EmailGeneratorController extends AbstractController
 {
     #[Route('/emailgenerator', name: 'app_email_generator')]
-    public function emailGenerator(MailerInterface $mailer): Response
+    public function emailGenerator(MailerInterface $mailer, Request $request): Response
     {
 
-        $email = (new Email())
+        $form = $this->createForm(EmailFormType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $email = (new Email())
             ->from('me@pierrelacaud.fr')
             ->to('pierre.lacaud@gmail.com')
-            ->subject('Essai d\'email')
-            ->text('Nouvel Email');
+            ->subject($form->getData()['object'])
+            ->text($form->getData()['message']);
 
-        $mailer->send($email);
+            $mailer->send($email);
+        }
+        
 
-        return $this->render('emailgenerator.html.twig');
+        return $this->render('emailgenerator.html.twig', [
+            'form' => $form
+        ]);
     }
 }
