@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block body %}
+
+
+    <div class="clients">
+    {% for client in clients %}
+        <div class="client">
+            <div class="client-info">{{client.companyName}}</div>
+            <div class="client-info">{{client.firstname}}</div>
+            <div class="client-info">{{client.lastname}}</div>
+            <div class="client-info"><a href={{client.website}}>{{client.website}}</a></div>
+            <div class="client-info">{{client.email}}</div>
+            <div class="client-info">{{client.phone}}</div>
+            <div class="client-info">{{client.address}}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
