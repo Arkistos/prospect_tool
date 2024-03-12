@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\EmailFormType;
+use App\Service\CSVReader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,18 +18,35 @@ class EmailGeneratorController extends AbstractController
     public function emailGenerator(MailerInterface $mailer, Request $request): Response
     {
 
+        
+
         $form = $this->createForm(EmailFormType::class);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $email = (new Email())
-            ->from('me@pierrelacaud.fr')
-            ->to('pierre.lacaud@gmail.com')
-            ->subject($form->getData()['object'])
-            ->text($form->getData()['message']);
 
-            $mailer->send($email);
+            $tmpName = $form['csv']->getData()->getPathName();
+
+            $informations = (new CSVReader)->readCSV($tmpName);
+
+            //dd($csvAsArray[4]['emails']);
+            
+
+
+            
+
+            foreach($informations as $information){
+                /*
+                $email = (new Email())
+                    ->from('me@pierrelacaud.fr')
+                    ->to($information['email'])
+                    ->subject($form->getData()['object'])
+                    ->text($form->getData()['message']);
+
+                $mailer->send($email);*/
+
+            }
         }
         
 
