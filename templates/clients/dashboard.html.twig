@@ -4,6 +4,9 @@
 
 {% block body %}
 
+{% if category|default %}
+    <a href={{path('clients_add', {'name':category.name})}}>Ajouter</a>
+{% endif %}
 
     <div class="clients">
     {% for client in clients %}
@@ -15,6 +18,11 @@
             <div class="client-info">{{client.email}}</div>
             <div class="client-info">{{client.phone}}</div>
             <div class="client-info">{{client.address}}</div>
+            <div class="client-info">{{client.state}}</div>
+        </div>
+        <div>
+            <a href={{path('clients_update', {'id':client.id})}}>update</a>
+            <a href={{path('clients_delete', {'id':client.id})}}>delete</a>
         </div>
     {% endfor %}
 </div>

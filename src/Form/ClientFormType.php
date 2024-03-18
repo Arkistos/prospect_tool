@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -22,6 +23,14 @@ class ClientFormType extends AbstractType
             ->add('phone', TelType::class)
             ->add('address')
             ->add('company_name')
+            ->add('state',ChoiceType::class,[
+                'choices' => [
+                    'Prospect' => 'Prospect',
+                    'Contact' => 'Contact',
+                    'En attente de réponse' => 'En attente de réponse',
+                    'Client' => 'Client'
+                ]
+            ])
             ->add('Envoyer', SubmitType::class)
         ;
     }
