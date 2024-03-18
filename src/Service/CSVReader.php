@@ -16,10 +16,8 @@ class CSVReader {
         foreach($csvAsArray as $key=>$line){
             $tab = [];
             foreach($line as $needle=>$element){
-                //array_push($tab, [$titles[$needle] => $element]);
                 $tab[$titles[$needle]] = $element;
             }
-
             array_push($tableResult, $tab);
         }
 

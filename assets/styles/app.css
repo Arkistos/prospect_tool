@@ -1,0 +1,17 @@
+body {
+    background-color: lightgray;
+}
+
+.clients{
+    display: flex;
+    flex-direction: column;
+}
+.client{
+    display: flex;
+    flex-direction: row;
+}
+
+.client-info{
+    width: 200px;
+    
+}
